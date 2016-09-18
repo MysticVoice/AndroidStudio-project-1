@@ -17,7 +17,9 @@ public class Conversation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.conversation);
         messages = new ArrayList<>();
+        user = Singleton.getInstance().getCurrentUser();
         mla = new MessageListAdapter(getApplicationContext(),messages);
         ListView listView = (ListView)findViewById(R.id.messages);
         listView.setAdapter(mla);

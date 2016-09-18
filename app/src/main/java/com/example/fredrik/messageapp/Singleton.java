@@ -8,6 +8,7 @@ import java.util.Hashtable;
 public class Singleton {
     private static Singleton sInstance = null;
     private Hashtable conversations;
+    private User currentUser;
     private User me;
     private Singleton()
     {
@@ -45,5 +46,15 @@ public class Singleton {
     public User getMe()
     {
         return me;
+    }
+    public void setCurrentUser(User user)
+    {
+        this.currentUser = user;
+
+    }
+
+    public User getCurrentUser()
+    {
+        return currentUser;
     }
 }

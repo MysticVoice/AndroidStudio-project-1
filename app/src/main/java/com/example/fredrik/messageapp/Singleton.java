@@ -28,7 +28,19 @@ public class Singleton {
 
     public Conversation getConversation(User user)
     {
-        return (Conversation)conversations.get(user);
+        Conversation conversation;
+        if(conversations.containsKey(user))
+        {
+            conversation = (Conversation)conversations.get(user);
+            conversation.testData();
+        }
+        else
+        {
+            conversation = new Conversation();
+            conversations.put(getCurrentUser(),conversation);
+
+        }
+        return conversation;
     }
     public void addConversation(Conversation conv)
     {

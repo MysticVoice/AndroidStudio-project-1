@@ -26,16 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         data = null;
 
-        if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
-        {
-            //fillContacts();
-            data = permissionContacts();
-        }
-
-        else
-        {
-            fillContacts();
-        }
+        data = permissionContacts();
 
         UserListAdapter ula = new UserListAdapter(getApplicationContext(),data);
 
@@ -94,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             do
             {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                // ID would be a better way to identify users than name
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 User user = new User(name);
                 contacts.add(user);
@@ -103,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     while (pCur.moveToNext())
                     {
                         String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
+                        //number might be usefull later
 
                     }
                     pCur.close();

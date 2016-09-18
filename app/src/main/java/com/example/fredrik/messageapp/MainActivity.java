@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
         {
-            //data = permissionContacts();
-            fillContacts();
+            //fillContacts();
+            data = permissionContacts();
         }
 
         else
@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
         // Check the SDK version and whether the permission is already granted or not.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
             return getContacts();
 
         }
-        return new ArrayList<User>();
+        return getContacts();
     }
 
     private ArrayList<User> getContacts()
@@ -94,17 +94,17 @@ public class MainActivity extends AppCompatActivity {
             do
             {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                User user = new User(name);
+                contacts.add(user);
                 if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
                 {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
                     while (pCur.moveToNext())
                     {
                         String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        User user = new User(id);
-                        contacts.add(user);
 
-                        break;
+
                     }
                     pCur.close();
                 }

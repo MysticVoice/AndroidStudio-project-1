@@ -19,34 +19,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    ArrayList<User> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        List
+        data = null;
 
-        ArrayList<User> data = null;
-        while(data == null) {
-            data = permissionContacts();
+        if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
+        {
+            //data = permissionContacts();
+            fillContacts();
         }
 
-//        if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
-//        {
-//            data = getContacts();
-//        }
-//
-//        else
-//        {
-//            data = new ArrayList<User>();
-//            data.add(new User("Mikael"));
-//            data.add(new User("Harry"));
-//            data.add(new User("Manning"));
-//            data.add(new User("Friedrich"));
-//            data.add(new User("Fredrik"));
-//               new User("Fredrico"),
-//               new User("Fanthomas"),
-//            data.add(new User("Dan"));
-//        }
+        else
+        {
+            fillContacts();
+        }
 
         UserListAdapter ula = new UserListAdapter(getApplicationContext(),data);
 
@@ -62,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void fillContacts()
+    {
+        data = new ArrayList<User>();
+        data.add(new User("Mikael"));
+        data.add(new User("Harry"));
+        data.add(new User("Manning"));
+        data.add(new User("Friedrich"));
+        data.add(new User("Fredrik"));
+        data.add(new User("Dan"));
     }
 
     // Request code for READ_CONTACTS. It can be any number > 0.
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             return getContacts();
 
         }
-        return null;
+        return new ArrayList<User>();
     }
 
     private ArrayList<User> getContacts()
@@ -112,5 +112,18 @@ public class MainActivity extends AppCompatActivity {
             } while (cursor.moveToNext()) ;
         }
         return contacts;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                data = getContacts();
+            } else {
+                Toast.makeText(this, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

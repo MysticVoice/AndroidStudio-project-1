@@ -20,7 +20,7 @@ public class Conversation extends AppCompatActivity {
         user = Singleton.getInstance().getCurrentUser();
 
         random = new Random();
-        testData();
+        //testData();
     }
 
     public void testData()
@@ -46,11 +46,11 @@ public class Conversation extends AppCompatActivity {
     public void randomMessage()
     {
         ArrayList<String> responses = new ArrayList<>();
-        responses.add("Fuck off, I'm sleeping!");
-        responses.add("I'm taking a shit, go away!");
-        responses.add("Why is there cereal in the oven?");
+        responses.add("Hello!");
+        responses.add("Lovely day today!");
+        responses.add("How do you do?");
         responses.add("...");
-        responses.add("Screw you guys, I'm going home!");
+        responses.add("I'm a random message!");
         int randVar = random.nextInt(responses.size());
         Message tempMess = new Message(user,responses.get(randVar));
         addMessage(tempMess);

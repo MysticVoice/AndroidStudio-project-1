@@ -30,5 +30,6 @@ public class ConversationActivity extends AppCompatActivity{
         EditText txt = (EditText) findViewById(R.id.messageField);
         message = txt.getText().toString();
         conversation.postMessage(message);
+        conversation.randomMessage();
     }
 }

@@ -33,7 +33,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
 
         ImageView person = (ImageView)convertView.findViewById(R.id.imageView);
         TextView messageView = (TextView)convertView.findViewById(R.id.textView);
-        person.setImageResource(android.R.drawable.btn_default);
+        if(message.getUser().equals(Singleton.getInstance().getMe()))
+        {
+            person.setImageResource(android.R.drawable.star_on);
+        }
+        else {
+            person.setImageResource(android.R.drawable.menu_frame);
+        }
         messageView.setText(message.getMessage());
 
         return convertView;
